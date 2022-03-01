@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>코로나 백신 접종자 수 확인하기</h3>
+<button th:onclick="callFirst()">1차 현황 보기</button>
+<button th:onclick="callSecond()">2차 현황 보기</button>
+<button th:onclick="callThird()">3차 현황 보기</button>
+
+<script>
+    let jsonObj = new Object(); // 결과를 저장해둘 오브젝트 미리 선언해둠
+    let url = "https://api.odcloud.kr/api/15077756/v1/vaccine-stat?page=1&perPage=10&cond%5BbaseDate%3A%3AGTE%5D=2022-03-01&cond%5Bsido%3A%3AEQ%5D=%EC%A0%84%EA%B5%AD&serviceKey=O030tE2cdLEHFO1kO96AEO%2FvYMPYHDM01rrIGzFvG1H3N1wCuaYMHEadkabIfBxl1Kww5m4vH4%2Fp5kibhscsdA%3D%3D";
+    fetch(url)
+        .then(res => res.json()) // 일단, 결과를 json 형태로 바꿔주기
+        .then(myJson => {
+        const obj = myJson.data[0];
+        jsonObj = obj;
+        console.log(obj);
+    });
+
+
+    function callFirst(){
+        let url = "/first_result";
+        fetch(url, {
+            method:"post",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(jsonObj)
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+    function callSecond(){
+        let url = "/second_result";
+        fetch(url, {
+            method:"post",
+            headers:{
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(jsonObj)
+        }).then(res => {
+            console.log(json);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+    function callThird(){
+        let url = "/third_result";
+        fetch(url, {
+            method:"post",
+            headers:{
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(jsonObj)
+        }).then(res => {
+            console.log(json);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+</script>
+</body>
+</html>
